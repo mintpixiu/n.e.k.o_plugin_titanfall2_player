@@ -327,7 +327,9 @@ class Titanfall2PlayerPlugin(NekoPluginBase):
         self._service = TitanfallService(
             logger=self.logger,
             push_message_fn=self.push_message,
-            data_dir=self.data_path(),
+            # ``storage_dir`` is a property; unlike ``data_path()`` it does not
+            # create a directory during the packager's metadata probe.
+            data_dir=self.storage_dir,
         )
         self._service_started = False
         self._service_start_lock = asyncio.Lock()

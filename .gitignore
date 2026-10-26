@@ -12,6 +12,7 @@ vendor/
 dist/
 build/
 *.egg-info/
+neko-stub/
 store.db
 .env
 .DS_Store
