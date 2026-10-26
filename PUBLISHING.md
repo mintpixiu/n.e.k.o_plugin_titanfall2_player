@@ -14,14 +14,14 @@ check --release --market-release
   passed
   version=1.0.0
   package=dist/titanfall2_player.neko-plugin
-  package_sha256=8b1dcc382147758e2530f52c13542f9568c4197cd51006e1603c2f06cd782b2b
-  payload_hash=5417ce78bf66f0283cc98ca4431893d55dcdd6c8363150edaf1e3cecd8d49d12
+  package_sha256=<每次构建输出，见 CLI>
+  payload_hash=<每次构建输出，见 CLI>
   payload_hash_verified=True
   tests=passed
 ```
 
-> 上面的 hash 是最近一次构建的值；每次改代码重新构建都会变。
-> 市场以 GitHub Release 里的 `market-evidence.json` 为准，不要手工抄写 hash。
+> Hash 每次改代码重新构建都会变。市场以 GitHub Release 里由标准 workflow
+> 生成的 `market-evidence.json` 为准，不要手工抄写 hash。
 
 本机真实宿主（Steam 版 N.E.K.O，插件服务器 48916）：
 
@@ -39,6 +39,24 @@ check --release --market-release
 **没有验证**：真实《泰坦陨落 2》画面与按键。原因是本机 Steam 库里没有安装
 该游戏（只有 Half-Life / Portal 2 等）。这一点在 README「已知限制」里也写了。
 因此发布文案不能写“已通关”“实机验证全流程”。
+
+### GitHub 当前状态（已实际完成）
+
+```text
+仓库：https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player
+可见性：public
+默认分支：main
+首次推送：546b682
+最新提交：f5d019a（test: skip stub-only surface checks when real SDK is preloaded）
+Verify N.E.K.O Plugin：success（run 40330010626）
+Release N.E.K.O Plugin：等待 v1.0.0 tag
+```
+
+### 市场当前状态（尚未完成）
+
+**尚未提交首次审核，也尚未生成 Market stable 版本。** 市场登录使用 NEKO 账号中心
+（Ory OAuth），需要在网页里用作者账号授权；当前会话没有该浏览器登录态，不能代替
+作者点“提交审核”。这是唯一没有自动完成的外部账号步骤。
 
 ---
 
