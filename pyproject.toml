@@ -1,0 +1,15 @@
+[project]
+name = "titanfall2_player"
+version = "1.0.0"
+description = "Let N.E.K.O play Titanfall 2: screen capture, scan-code input, reactive parkour/gunplay/Titan policy and proactive narration."
+requires-python = ">=3.11"
+authors = [{ name = "呆萌貔貅" }]
+
+# Runtime dependencies are deliberately empty: the plugin uses the standard
+# library plus what the N.E.K.O host already ships (numpy, Pillow).  It never
+# needs cv2 / opencv-python / dxcam, and installing packages into the frozen
+# host interpreter is forbidden by the plugin format.
+dependencies = []
+
+[tool.neko.build]
+exclude_files = []

@@ -1,0 +1,79 @@
+# titanfall2_player —— runtime configuration template.
+#
+# The live configuration lives in the N.E.K.O plugin state directory
+# (`<storage-root>/plugins/titanfall2_player/config/plugin.toml`, editable from
+# 插件管理 → 泰坦陨落2 陪玩 → 配置).  This file documents every key and its
+# default so values can be copied into the live config.
+#
+# `plugin.toml` ships the same defaults, so a fresh install behaves exactly like
+# this template.
+
+[titanfall2]
+# auto | dxgi | gdi | pil
+capture_backend = "auto"
+capture_monitor = 0
+min_capture_edge = 160
+
+# Observation and screenshot streaming.
+target_fps = 4.0
+frame_max_edge_px = 1024
+frame_jpeg_quality = 75
+frame_max_bytes = 102400
+stream_frames_to_llm = true
+frame_stream_interval_seconds = 8.0
+commentary_interval_seconds = 25.0
+problem_cooldown_seconds = 60.0
+
+# Safety.
+require_foreground = true
+autopilot_enabled = false
+autopilot_tick_seconds = 0.3
+dry_run = false
+max_session_minutes = 45.0
+blind_frame_limit = 8
+auto_call_titan = true
+
+# Mouse-look calibration.  If turns overshoot, raise this; if they undershoot,
+# lower it.  `titan_aim` is closed-loop, so an approximate value is enough.
+look_units_per_degree = 11.0
+horizontal_fov = 90.0
+vertical_fov = 59.0
+invert_y = false
+
+# "Jump in and play together".  F8 is a hard pause that only "继续"/titan_resume
+# clears.
+yield_on_human_input = true
+human_input_grace_seconds = 12.0
+pause_hotkey_enabled = true
+
+# Menu handling.  This never clicks "New Game".
+auto_resume_from_menu = true
+menu_stable_ticks = 3
+start_in_game_required = true
+
+objective = ""
+plan_steps = []
+
+# Per-action key overrides.  The plugin's canonical actions are:
+#   forward back left right jump crouch sprint interact reload attack aim
+#   titan eject tactical ordnance melee boost weapon_1 weapon_2 weapon_3
+# Public control references disagree about the optional ability keys
+# (tactical / ordnance / melee / boost); verify them once in the game's own
+# settings.  The core movement/fire/interact loop works with the defaults below.
+[titanfall2.keys]
+# forward = "w"
+# back = "s"
+# left = "a"
+# right = "d"
+# jump = "space"
+# crouch = "ctrl"
+# sprint = "shift"
+# interact = "e"
+# reload = "r"
+# attack = "mouse1"
+# aim = "mouse2"
+# titan = "v"
+# tactical = "q"
+# ordnance = "g"
+# melee = "f"
+# boost = "c"

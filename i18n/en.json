@@ -1,0 +1,7 @@
+{
+  "plugin.name": "Titanfall 2 Play",
+  "plugin.description": "Let N.E.K.O play Titanfall 2: open the game yourself, say 'play Titanfall 2', and the catgirl watches the screen, plans out loud, drives parkour, gunplay and Titan combat, and yields whenever you take over.",
+  "action.titan_play": "Let the catgirl play Titanfall 2",
+  "action.titan_stop": "Tell her to stop",
+  "action.titan_status": "Refresh status"
+}
