@@ -115,6 +115,12 @@ def test_no_startup_side_effects():
 def _load_sdk_surface():
     sdk = pytest.importorskip("plugin.sdk.plugin")
     package = pytest.importorskip("titanfall2_player")
+    if not hasattr(sdk, "StubContext"):
+        # Market CI mounts the plugin inside the real N.E.K.O tree, whose
+        # ``plugin`` package is imported before this conftest runs.  The local
+        # strict stub is then shadowed; the real surface is covered by the live
+        # host probe described in PUBLISHING.md instead of being faked here.
+        pytest.skip("real N.E.K.O SDK present; surface is covered by the live host probe")
     return sdk, package
 
 
