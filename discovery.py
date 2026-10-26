@@ -373,7 +373,8 @@ def client_rect_on_screen(hwnd: int) -> tuple[int, int, int, int]:
     return (left, top, left + int(rect.right - rect.left), top + int(rect.bottom - rect.top))
 
 
-WNDENUMPROC = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+_WINFUNCTYPE = getattr(ctypes, "WINFUNCTYPE", ctypes.CFUNCTYPE)
+WNDENUMPROC = _WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
 
 
 def find_windows_for_pids(pids: Iterable[int]) -> list[WindowInfo]:
