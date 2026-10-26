@@ -232,8 +232,7 @@ V 召唤泰坦/泰坦核心 · Q 战术 · G 副武器 · F 近战 · C 强化 �
 
 ```text
 离线测试                                            48 passed
-官方 CLI check                                     0 error（仅 git remote / 未提交两项发布前警告）
-官方 CLI check --release                           发布构建、payload hash 校验、包内测试通过
+官方 CLI check --release --market-release        passed（tests=passed, hash 校验通过）
 打包解包 / metadata                                 payload_hash_verified=True
 真实 N.E.K.O 宿主导入                               upload-and-install 成功
 真实 N.E.K.O 宿主启动                               running，7 entries
@@ -243,6 +242,18 @@ LLM 工具注册                                        12 个 titan_* 工具注
 真实截图后端                                        DXGI/GDI/PIL 均出图 2560×1600
 输入 ABI                                            INPUT=40 字节
 发送器                                              纯 ctypes SendInput，扫描码
+GitHub Actions Verify                               success（Linux，48 tests）
+GitHub Release v1.0.0                               success（3 个资产）
+```
+
+Release：<https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player/releases/tag/v1.0.0>
+
+官方 Release 证据：
+
+```text
+package_sha256=3938d8525f3e70d603054d7ef7e9cb302bca3eb0effaeaf71379063e5f789650
+payload_hash=d9dcb5d14910f5948de8fda24df869b208bb1197729a2b71ab74c8b9538feec8
+size=133884
 ```
 
 ### 未完成 / 必须诚实说明
@@ -252,8 +263,10 @@ LLM 工具注册                                        12 个 titan_* 工具注
   当前的视觉阈值是对合成帧 + 公开截图做的，不是对你这台机器上的真实 HUD 调的。
 * 因此也不能声称「已通关」「HUD 像素完全适配」。第一次运行请先 `dry_run`，
   再用 `titan_selfcheck` / `titan_look` 校准。
-* 首次上架市场还差**作者账号**的两步：GitHub 仓库 + 市场网页首次审核。
-  详见 [`PUBLISHING.md`](PUBLISHING.md)。
+* **市场 stable 版本尚未发布**。GitHub 仓库、CI、v1.0.0 Release 都已完成；
+  但市场首次审核需要作者账号在 <https://market.project-neko.cn/#/upload> 登录提交。
+  官方通知接口当前返回 `release_repo_mismatch`（Release 未绑定到已通过审核的插件），
+  这正是“还差首次审核”的证据。详见 [`PUBLISHING.md`](PUBLISHING.md)。
 
 ---
 

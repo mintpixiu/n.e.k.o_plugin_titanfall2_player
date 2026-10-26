@@ -46,17 +46,53 @@ check --release --market-release
 仓库：https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player
 可见性：public
 默认分支：main
-首次推送：546b682
-最新提交：f5d019a（test: skip stub-only surface checks when real SDK is preloaded）
-Verify N.E.K.O Plugin：success（run 40330010626）
-Release N.E.K.O Plugin：等待 v1.0.0 tag
+tag：v1.0.0（source commit 9f2f5ba）
+Verify N.E.K.O Plugin：success（run 40332626053）
+Release N.E.K.O Plugin：success（run 40332626076）
+Release：https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player/releases/tag/v1.0.0
 ```
+
+Release 三个资产均已生成：
+
+```text
+titanfall2_player.neko-plugin                133884 bytes
+titanfall2_player.market-release-check.txt
+market-evidence.json
+```
+
+官方 `market-evidence.json`：
+
+```json
+{
+  "plugin_id": "titanfall2_player",
+  "version": "1.0.0",
+  "source_commit": "9f2f5ba6edfb813c63e2261b32ceb7f749e880d6",
+  "package": {
+    "sha256": "3938d8525f3e70d603054d7ef7e9cb302bca3eb0effaeaf71379063e5f789650",
+    "payload_hash": "d9dcb5d14910f5948de8fda24df869b208bb1197729a2b71ab74c8b9538feec8",
+    "size": 133884
+  }
+}
+```
+
+GitHub Actions 里的 `check --release` 同样通过（`tests=passed`，
+`payload_hash_verified=True`）。
 
 ### 市场当前状态（尚未完成）
 
 **尚未提交首次审核，也尚未生成 Market stable 版本。** 市场登录使用 NEKO 账号中心
 （Ory OAuth），需要在网页里用作者账号授权；当前会话没有该浏览器登录态，不能代替
 作者点“提交审核”。这是唯一没有自动完成的外部账号步骤。
+
+已经尝试调用官方通知：
+
+```text
+neko-plugin publish market https://github.com/.../releases/tag/v1.0.0
+→ HTTP 400
+→ release_repo_mismatch: GitHub release 未绑定到唯一的已通过插件
+```
+
+这条拒绝恰好证明：**必须先完成网页首次审核**，Release 本身没有技术问题。
 
 ---
 
@@ -79,9 +115,9 @@ Release N.E.K.O Plugin：等待 v1.0.0 tag
 
 ---
 
-## 3. 还差哪两步（需要作者账号）
+## 3. 还差哪一步（需要作者账号）
 
-### 3.1 GitHub 仓库
+### 3.1 GitHub 仓库（已完成）
 
 市场要求仓库名：
 
@@ -89,20 +125,16 @@ Release N.E.K.O Plugin：等待 v1.0.0 tag
 n.e.k.o_plugin_titanfall2_player
 ```
 
-公开仓库，作者 `mintpixiu`。插件目录本身已经是独立 Git 仓库（`main` 分支）。
+已创建并推送：
 
-```powershell
-cd C:\Users\inksa\Documents\deepseek-harness\default-workspace\titanfall2_player
-git add .
-git commit -m "feat: Titanfall 2 player plugin v1.0.0"
-git remote add origin https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player.git
-git push -u origin main
+```text
+https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player
 ```
 
-推送后打开仓库 **Actions**，等 `Verify N.E.K.O Plugin` 变绿。标准
-`verify.yml` / `release.yml` 已经由 `neko-plugin init` 生成。
+`main` 分支、`v1.0.0` tag、Verify 和 Release 两个 workflow 均已成功。
+标准 `verify.yml` / `release.yml` 由 `neko-plugin init` 生成。
 
-### 3.2 市场网页首次审核
+### 3.2 市场网页首次审核（唯一剩余步骤）
 
 1. 打开 <https://market.project-neko.cn/#/upload> 并用作者账号登录。
 2. 填仓库地址 `https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player`。
@@ -110,22 +142,18 @@ git push -u origin main
 4. 提交首次审核。
 5. 在「我的插件」里看检查结果与审核意见。
 
-审核通过后，回到 N.E.K.O 源码根目录：
+审核通过后，回到 N.E.K.O 源码根目录，直接通知 Market：
 
 ```powershell
-uv run neko-plugin publish C:\Users\inksa\Documents\deepseek-harness\default-workspace\titanfall2_player
+uv run neko-plugin publish market `
+  https://github.com/mintpixiu/n.e.k.o_plugin_titanfall2_player/releases/tag/v1.0.0
 ```
 
-它会再次跑 release check，确认 HEAD 已推送，创建并推送 `v1.0.0` tag，
-等 GitHub Actions 产出：
+> `v1.0.0` tag 和 Release 已经存在，**不要再推一次同名 tag**。
+> 如果审核要求改代码，先升 `plugin.toml` 版本（例如 1.0.1），commit/push，
+> 再 `publish github` 生成新 Release，然后通知 Market。
 
-```text
-titanfall2_player.neko-plugin
-titanfall2_player.market-release-check.txt
-market-evidence.json
-```
-
-然后通知 Market 发布 `stable` 版本。
+它会验证 Release 里的 `market-evidence.json`，然后发布 `stable` 版本。
 
 > `publish` **不能代替首次审核**。没有审核通过 + 仓库匹配，市场不会接受。
 
